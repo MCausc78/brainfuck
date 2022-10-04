@@ -21,24 +21,20 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	char *cpu;
-	int cpubytes = sizeof(char) * 30000;
-	cpu = malloc(cpubytes);
+	cpu = calloc(30000, sizeof(char));
 	if(cpu == NULL) {
-		fprintf(stderr, "brainfuck: failed to allocate %d bytes for virtual memory", cpubytes);
+		fprintf(stderr, "brainfuck: failed to allocate virtual memory");
 		fclose(fp);
 		return 2;
 	}
 	char *buf;
-	int bufbytes = sizeof(char) * 16384;
-	buf = malloc(bufbytes);
+	buf = calloc(16384, sizeof(char));
 	if(buf == NULL) {
-		fprintf(stderr, "brainfuck: failed to allocate %d bytes for buffer", bufbytes);
+		fprintf(stderr, "brainfuck: failed to allocate buffer");
 		fclose(fp);
-		free(buf);
+		free(cpu);
 		return 3;
 	}
-	memset(cpu, 0, 30000);
-	memset(buf, 0, 16384);
 	unsigned int j=0;
 	int brc = 0;
 	if(fp == stdin)
